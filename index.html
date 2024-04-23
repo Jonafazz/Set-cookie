@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="script.js" defer></script>
+</head>
+
+<body onload="checkCookie()"></body>
+
+<body>
+    <script>
+        // coocie expires ne ate date, nuk mban mend me pas asaj date
+        // document.cookie = "username=Maz Maximillian; expires=Thu, 18 Dec 2025 12:00:00 UTC; path=/";
+
+        // console.log(document.cookie)
+
+
+        //function te set a cookie
+        function setCookie(name, value, days) {
+            var expires = "";
+            if (days) {
+                const d = new Date();
+                d.setTime(d.getTime() + (days * 24 * 60 * 60 * 1000));
+                let expires = "expires=" + d.toUTCString();//kthen ne strig, sepse cookies  nuk marrin vlere tjeter
+            }
+            document.cookie = name + "=" + value + ";" + expires + ";path=/";
+        }
+        //function per te marre cookie
+        function getCookie(name) {
+            let nameEQ = name + "=";
+            let decodedCookie = decodeURIComponent(document.cookie);
+            let ca = decodedCookie.split(';');
+            for (let i = 0; i < ca.length; i++) {
+                let c = ca[i];
+                while (c.charAt(0) == ' ') {
+                    c = c.substring(1);
+                }
+                if (c.indexOf(name) == 0) {
+                    return c.substring(name.length, c.length);
+                }
+            }
+            return "";
+        }
+
+        function checkCookie() {
+            let user = getCookie("username");
+            if (user != "") {
+                alert("Welcome again " + user);
+            } else {
+                user = prompt("Please enter your name:", "");
+                if (user != "" && user != null) {
+                    setCookie("username", user, 365);//365  tregon edhe sa bohet cookie expired
+                }
+            }
+        }
+    </script>
+</body>
+
+</html>
